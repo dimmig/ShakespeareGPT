@@ -119,7 +119,7 @@ class BigramLM(nn.Module):
             probs = nn.functional.softmax(logits, dim=-1)
             next_token = torch.multinomial(probs, num_samples=1)
             idx = torch.cat((idx, next_token), dim=1)
-        return idx
+            print(decode([next_token.item()]), end='', flush=True)
 
 
 model = BigramLM().to(device)
@@ -131,3 +131,15 @@ init_token = torch.zeros((1, 1), dtype=torch.long, device=device)
 generated_sequence = model.generate(init_token, new_tokens_count=800)[0].tolist()
 
 print(decode(generated_sequence))
+
+# for i in range(max_training_iterations):
+#
+#     if i % eval_interval == 0:
+#         losses = estimate_loss()
+#         print(f'step {i}: train loss = {losses["train"]:.4f}, eval loss = {losses["eval"]:.4f}')
+#
+#     x_batch, y_batch = get_batch('train')
+#     _, loss = model(x_batch, y_batch)
+#     optimizer.zero_grad(set_to_none=True)
+#     loss.backward()
+#     optimizer.step()
