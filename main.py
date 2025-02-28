@@ -169,6 +169,5 @@ out, loss = model(x_batch, y_batch)  # batch_size x max_context_size x vocab_siz
 
 
 model.load_state_dict(torch.load('./model_weight.pt', map_location=device))
-
-# Generate result
 model.generate(torch.zeros((1, 1), dtype=torch.long, device=device), new_tokens_count=1000)
+
